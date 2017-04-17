@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,6 +9,7 @@
     android:orientation="vertical"
     android:focusableInTouchMode="true"
     android:clickable="true"
+    android:padding="10dp"
     android:id="@+id/exampleActivity">
 
     <AutoCompleteTextView
@@ -15,22 +17,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:completionThreshold="1"
+        android:paddingBottom="20dp"
         android:maxLines="1"
         android:maxLength="15"
         android:inputType="text"
         android:hint="Ingredient"
-        android:textSize="12sp"
+        android:textSize="20sp"
         android:textColor="#000000"/>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:layout_gravity="center"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="horizontal">
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/textView"
@@ -38,7 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="for"
-            android:textSize="12sp"
+            android:textSize="20sp"
+            android:textStyle="italic"
             android:textColor="#000000"/>
 
         <EditText
@@ -51,7 +59,8 @@
             android:imeOptions="actionDone"
             android:selectAllOnFocus="true"
             android:text="2"
-            android:textSize="12sp"
+            android:textSize="20sp"
+            android:textStyle="italic"
             android:textAlignment="center"
             android:textColor="#000000"/>
 
@@ -61,9 +70,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="persons"
-            android:textSize="12sp"
+            android:textSize="20sp"
+            android:textStyle="italic"
             android:textColor="#000000"/>
-
 
     </LinearLayout>
 
@@ -72,6 +81,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Click me" />
-
 
 </LinearLayout>
