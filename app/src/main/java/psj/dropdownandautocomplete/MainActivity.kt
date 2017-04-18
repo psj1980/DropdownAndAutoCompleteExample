@@ -29,7 +29,7 @@ class MainActivity : Activity() {
 
 
 
-        // NUMBER ONLY EditText:
+        // NUMBERS ONLY EditText:
 
         // Listen for click on done button in EditText
         editText.setOnEditorActionListener { v, actionId, event ->
@@ -88,6 +88,7 @@ class MainActivity : Activity() {
         autoCompleteTextView.isFocusable = true
         autoCompleteTextView.isFocusableInTouchMode = true
         spinner.isEnabled = true
+        button.text = "Done"
     }
 
     // Set attributes to disable editing in an EditText view
@@ -99,6 +100,7 @@ class MainActivity : Activity() {
         autoCompleteTextView.isFocusable = false
         autoCompleteTextView.isFocusableInTouchMode = false
         spinner.isEnabled = false
+        button.text = "Edit"
         hideKeyboard()
     }
 
