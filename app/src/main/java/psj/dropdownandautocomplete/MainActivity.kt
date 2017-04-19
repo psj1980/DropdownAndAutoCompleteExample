@@ -17,20 +17,20 @@ class MainActivity : Activity() {
     val courseType = arrayOf("Starter", "Main course", "Dessert")
     val ingredients = setOf<String>("Mel", "Bagepulver", "Melis", "Sukker", "Mørbradkød", "Gær", "Æg", "Salt")
     var edit = false
-    val numberToCalculate = 4.4
+    val numberToCalculate = 4.409
     val noOfPeople = 2
-    val numberFormatter = NumberFormat.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val numberFormatter = NumberFormat.getInstance()
         numberFormatter.minimumFractionDigits = 0
         numberFormatter.maximumFractionDigits = 2
 
         editText.setText(noOfPeople.toString())
-        textView4.text = numberToCalculate.toString()
+        textView4.text = numberFormatter.format(numberToCalculate)
 
         makeViewsUneditable()
 
@@ -44,7 +44,7 @@ class MainActivity : Activity() {
 
         // Listen for click on done button in EditText
         editText.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) { updateTextViewToNewNumber(); true }
+            if (actionId == EditorInfo.IME_ACTION_DONE) updateTextViewToNewNumber()
             else false }
 
         // Listen for change of focus away from EditText
@@ -83,13 +83,18 @@ class MainActivity : Activity() {
     }
 
     // Find numberToCalculate in EditText and toast it
-    fun updateTextViewToNewNumber() {
+    fun updateTextViewToNewNumber(): Boolean {
+
+        val numberFormatter = NumberFormat.getInstance()
+        numberFormatter.minimumFractionDigits = 0
+        numberFormatter.maximumFractionDigits = 2
 
         val newNoOfPeople = validateNumber(editText.text.toString())
 
         editText.setText(newNoOfPeople.toString())
         textView4.text = numberFormatter.format(calculateNewNumber(newNoOfPeople))
         hideKeyboard()
+        return true
     }
 
     // Set attributes to enable editing in an EditText view
