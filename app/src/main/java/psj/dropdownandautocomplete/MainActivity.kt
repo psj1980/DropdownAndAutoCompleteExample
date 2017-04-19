@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.inputMethodManager
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.toast
+import java.text.NumberFormat
 
 
 class MainActivity : Activity() {
@@ -16,13 +17,23 @@ class MainActivity : Activity() {
     val courseType = arrayOf("Starter", "Main course", "Dessert")
     val ingredients = setOf<String>("Mel", "Bagepulver", "Melis", "Sukker", "Mørbradkød", "Gær", "Æg", "Salt")
     var edit = false
+    val numberToCalculate = 4.4
+    val noOfPeople = 2
+    val numberFormatter = NumberFormat.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        numberFormatter.minimumFractionDigits = 0
+        numberFormatter.maximumFractionDigits = 2
+
+        editText.setText(noOfPeople.toString())
+        textView4.text = numberToCalculate.toString()
+
         makeViewsUneditable()
+
 
         // Set button on click event listener
         button.onClick { if (edit) makeViewsUneditable() else makeViewsEditable() }
@@ -33,11 +44,11 @@ class MainActivity : Activity() {
 
         // Listen for click on done button in EditText
         editText.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) { toastNumber(); true }
+            if (actionId == EditorInfo.IME_ACTION_DONE) { updateTextViewToNewNumber(); true }
             else false }
 
         // Listen for change of focus away from EditText
-        editText.setOnFocusChangeListener { v, hasFocus -> if (!hasFocus) toastNumber() }
+        editText.setOnFocusChangeListener { v, hasFocus -> if (!hasFocus) updateTextViewToNewNumber() }
 
 
 
@@ -71,11 +82,13 @@ class MainActivity : Activity() {
         }
     }
 
-    // Find number in EditText and toast it
-    fun toastNumber() {
+    // Find numberToCalculate in EditText and toast it
+    fun updateTextViewToNewNumber() {
 
-        editText.setText(validateNumber(editText.text.toString()).toString())
-        toast(editText.text.toString())
+        val newNoOfPeople = validateNumber(editText.text.toString())
+
+        editText.setText(newNoOfPeople.toString())
+        textView4.text = numberFormatter.format(calculateNewNumber(newNoOfPeople))
         hideKeyboard()
     }
 
@@ -107,6 +120,10 @@ class MainActivity : Activity() {
     // Hide the keyboard
     fun hideKeyboard() { inputMethodManager.hideSoftInputFromWindow(exampleActivity.windowToken, 0) }
 
-    // When the number-var is empty or has value < 1, 2 is returned, else return number
+    // When the numberToCalculate-var is empty or has value < 1, 2 is returned, else return numberToCalculate
     fun validateNumber(number: String) = if (number.isEmpty() || number.toInt() < 1) 2 else number.toInt()
+
+    fun calculateNewNumber(newNoOfPeople: Int) =
+            if (newNoOfPeople == noOfPeople) numberToCalculate
+            else (numberToCalculate / noOfPeople) * newNoOfPeople
 }
